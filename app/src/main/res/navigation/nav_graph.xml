@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/navigation">
     <fragment
         android:id="@+id/SettingsFragment"
         android:name="com.maxsch.symmetricguide.ui.settings.SettingsFragment"
@@ -11,57 +11,87 @@
         tools:layout="@layout/fragment_settings">
         <action
             android:id="@+id/action_SettingsFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/MaterialsFragment"
-        android:name="com.maxsch.symmetricguide.ui.material.list.MaterialsListFragment"
-        android:label="@string/materials_list_fragment_label"
-        tools:layout="@layout/fragment_materials_list">
-        <action
-            android:id="@+id/action_MaterialsFragment_to_SettingsFragment"
-            app:destination="@id/SettingsFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-        <action
-            android:id="@+id/action_MaterialsFragment_to_materialFragment"
-            app:destination="@id/materialFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/materialFragment"
-        android:name="com.maxsch.symmetricguide.ui.material.MaterialFragment"
-        android:label="fragment_material"
-        tools:layout="@layout/fragment_material" />
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.maxsch.symmetricguide.ui.login.LoginFragment"
-        android:label="@string/login_fragment_label"
-        tools:layout="@layout/fragment_login">
-        <action
-            android:id="@+id/action_loginFragment_to_registerFragment2"
-            app:destination="@id/registerFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-        <action
-            android:id="@+id/action_loginFragment_to_MaterialsFragment"
-            app:destination="@id/MaterialsFragment"
+            app:destination="@id/navigation"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
     </fragment>
-    <fragment
-        android:id="@+id/registerFragment"
-        android:name="com.maxsch.symmetricguide.ui.register.RegisterFragment"
-        android:label="@string/login_register">
+    <navigation
+        android:id="@+id/navigation"
+        app:startDestination="@id/loginFragment">
+        <fragment
+            android:id="@+id/loginFragment"
+            android:name="com.maxsch.symmetricguide.ui.login.LoginFragment"
+            android:label="@string/login_fragment_label"
+            tools:layout="@layout/fragment_login">
+            <action
+                android:id="@+id/action_loginFragment_to_registerFragment2"
+                app:destination="@id/registerFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            <action
+                android:id="@+id/action_loginFragment_to_MaterialsFragment"
+                app:destination="@id/navigation2"
+                app:popUpTo="@id/nav_graph"
+                app:popUpToInclusive="true" />
+        </fragment>
+        <fragment
+            android:id="@+id/registerFragment"
+            android:name="com.maxsch.symmetricguide.ui.register.RegisterFragment"
+            android:label="@string/login_register"
+            tools:layout="@layout/fragment_register">
+            <action
+                android:id="@+id/action_registerFragment_to_MaterialsFragment"
+                app:destination="@id/navigation2"
+                app:popUpTo="@id/nav_graph"
+                app:popUpToInclusive="true" />
+        </fragment>
         <action
-            android:id="@+id/action_registerFragment_to_MaterialsFragment"
-            app:destination="@id/MaterialsFragment"
-            app:popUpTo="@id/MaterialsFragment"
+            android:id="@+id/action_navigation_pop"
+            app:popUpTo="@id/navigation"
             app:popUpToInclusive="true" />
-    </fragment>
+        <action
+            android:id="@+id/action_global_navigation2"
+            app:destination="@id/navigation2"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </navigation>
+    <navigation
+        android:id="@+id/navigation2"
+        app:startDestination="@id/MaterialsListFragment">
+        <fragment
+            android:id="@+id/MaterialsListFragment"
+            android:name="com.maxsch.symmetricguide.ui.material.list.MaterialsListFragment"
+            android:label="@string/materials_list_fragment_label"
+            tools:layout="@layout/fragment_materials_list">
+            <action
+                android:id="@+id/action_MaterialsFragment_to_SettingsFragment"
+                app:destination="@id/SettingsFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            <action
+                android:id="@+id/action_MaterialsFragment_to_materialFragment"
+                app:destination="@id/materialFragment" />
+            <action
+                android:id="@+id/action_MaterialsFragment_to_materialEditor"
+                app:destination="@id/materialEditor" />
+        </fragment>
+        <fragment
+            android:id="@+id/materialFragment"
+            android:name="com.maxsch.symmetricguide.ui.material.MaterialFragment"
+            android:label="fragment_material"
+            tools:layout="@layout/fragment_material">
+            <action
+                android:id="@+id/action_materialFragment_to_materialEditor"
+                app:destination="@id/materialEditor" />
+        </fragment>
+        <fragment
+            android:id="@+id/materialEditor"
+            android:name="com.maxsch.symmetricguide.ui.material.editor.MaterialEditorFragment"
+            android:label="MaterialEditor"
+            tools:layout="@layout/fragment_editor" />
+    </navigation>
 </navigation>

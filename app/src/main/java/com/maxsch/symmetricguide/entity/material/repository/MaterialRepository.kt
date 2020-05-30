@@ -1,13 +1,16 @@
 package com.maxsch.symmetricguide.entity.material.repository
 
 import com.maxsch.symmetricguide.entity.material.Material
+import io.reactivex.Flowable
 import io.reactivex.Single
 
 interface MaterialRepository {
 
-    fun getMaterials(): Single<List<Material>>
+    fun observeMaterials(): Flowable<List<Material>>
 
     fun getMaterialById(id: Int): Single<Material>
+
+    fun observeMaterial(id: Int): Flowable<Material>
 
     fun updateMaterial(updatedMaterial: Material): Single<Unit>
 

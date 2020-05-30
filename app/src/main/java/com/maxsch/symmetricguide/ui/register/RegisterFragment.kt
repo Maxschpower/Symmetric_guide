@@ -4,29 +4,26 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.maxsch.symmetricguide.R
-import com.maxsch.symmetricguide.presentation.register.RegisterPresenter
+import com.maxsch.symmetricguide.presentation.register.RegisterViewModel
+import com.maxsch.symmetricguide.presentation.subscribe
+import com.maxsch.symmetricguide.ui.BaseFragment
 import kotlinx.android.synthetic.main.fragment_register.*
-import moxy.MvpAppCompatFragment
-import moxy.presenter.InjectPresenter
-import moxy.presenter.ProvidePresenter
-import org.koin.android.ext.android.get
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class RegisterFragment : MvpAppCompatFragment(R.layout.fragment_register), RegisterView {
+class RegisterFragment : BaseFragment(R.layout.fragment_register) {
 
-    @InjectPresenter
-    lateinit var presenter: RegisterPresenter
-
-    @ProvidePresenter
-    fun providePresenter() = get<RegisterPresenter>()
+    private val viewModel: RegisterViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.loginEvent.subscribe(this, ::login)
+
         registerButton.setOnClickListener {
-            presenter.register(registerUsername.text.toString(), registerPassword.text.toString())
+            viewModel.register(registerUsername.text.toString(), registerPassword.text.toString())
         }
     }
 
-    override fun login() {
+    private fun login() {
         findNavController().navigate(R.id.action_registerFragment_to_MaterialsFragment)
     }
 }
